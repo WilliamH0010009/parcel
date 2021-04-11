@@ -10,6 +10,7 @@
     ],
     "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
       "@parcel/transformer-babel",
+      "@parcel/transformer-flow",
       "@parcel/transformer-js",
       "@parcel/transformer-react-refresh-wrap"
     ],

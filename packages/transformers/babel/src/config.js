@@ -6,16 +6,12 @@ import type {Diagnostic} from '@parcel/diagnostic';
 import type {BabelConfig} from './types';
 
 import path from 'path';
-import * as internalBabelCore from '@babel/core';
 import {hashObject, relativePath, resolveConfig} from '@parcel/utils';
 import {md, generateJSONCodeHighlights} from '@parcel/diagnostic';
 
 import isJSX from './jsx';
-import getFlowOptions from './flow';
-import {enginesToBabelTargets} from './utils';
 
 const TYPESCRIPT_EXTNAME_RE = /\.tsx?$/;
-const BABEL_TRANSFORMER_DIR = path.dirname(__dirname);
 const JS_EXTNAME_RE = /^\.(js|cjs|mjs)$/;
 const BABEL_CONFIG_FILENAMES = [
   '.babelrc',
@@ -67,7 +63,7 @@ export async function load(
       options.projectRoot,
     ))
   ) {
-    return buildDefaultBabelConfig(options, config);
+    return;
   }
 
   const babelCore: BabelCore = await options.packageManager.require(
@@ -201,58 +197,7 @@ export async function load(
       definePluginDependencies(config, partialConfig.options, options);
       config.setCacheKey(hashObject(partialConfig.options));
     }
-
-    return {
-      internal: false,
-      config: partialConfig.options,
-      targets: enginesToBabelTargets(config.env),
-      syntaxPlugins,
-    };
-  } else {
-    return buildDefaultBabelConfig(options, config);
   }
-}
-
-async function buildDefaultBabelConfig(
-  options: PluginOptions,
-  config: Config,
-): Promise<?BabelConfigResult> {
-  // If this is a .ts or .tsx file, we don't need to enable flow.
-  if (TYPESCRIPT_EXTNAME_RE.test(config.searchPath)) {
-    return;
-  }
-
-  // Detect flow. If not enabled, babel doesn't need to run at all.
-  let babelOptions = await getFlowOptions(config, options);
-  if (babelOptions == null) {
-    return;
-  }
-
-  // When flow is enabled, we may also need to enable JSX so it parses properly.
-  let syntaxPlugins = [];
-  if (await isJSX(options, config)) {
-    syntaxPlugins.push('jsx');
-  }
-
-  babelOptions.presets = (babelOptions.presets || []).map(preset =>
-    internalBabelCore.createConfigItem(preset, {
-      type: 'preset',
-      dirname: BABEL_TRANSFORMER_DIR,
-    }),
-  );
-  babelOptions.plugins = (babelOptions.plugins || []).map(plugin =>
-    internalBabelCore.createConfigItem(plugin, {
-      type: 'plugin',
-      dirname: BABEL_TRANSFORMER_DIR,
-    }),
-  );
-
-  definePluginDependencies(config, babelOptions, options);
-  return {
-    internal: true,
-    config: babelOptions,
-    syntaxPlugins,
-  };
 }
 
 function hasRequire(options) {
