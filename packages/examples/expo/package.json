@@ -2,7 +2,7 @@
   "name": "@parcel/example-expo",
   "version": "0.0.0",
   "scripts": {
-    "start": "parcel serve entry.js"
+    "start": "parcel serve entry.js --target default"
   },
   "dependencies": {
     "expo": "~42.0.1",
