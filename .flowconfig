@@ -25,6 +25,7 @@ untyped-type-import=error
 [options]
 module.system.node.main_field=source
 module.system.node.main_field=main
+sharedmemory.heap_size=3221225472
 
 [strict]
 nonstrict-import

@@ -229,6 +229,8 @@ export default (new Transformer({
       );
 
       decorators = compilerOptions?.experimentalDecorators;
+    } else {
+      isJSX = true;
     }
 
     // Check if we should ignore fs calls
@@ -491,6 +493,12 @@ export default (new Transformer({
       };
 
       if (errors.length > 0) {
+        if (
+          asset.filePath ===
+          '/Users/niklas/Desktop/parcel/node_modules/react-native/Libraries/Utilities/DevSettings.js'
+        ) {
+          console.log(code.toString());
+        }
         throw new ThrowableDiagnostic({
           diagnostic: errors.map(convertDiagnostic),
         });

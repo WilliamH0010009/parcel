@@ -4,20 +4,20 @@ import {Transformer} from '@parcel/plugin';
 
 export default (new Transformer({
   async loadConfig({config, options}) {
-    if (!config.isSource) {
-      return false;
-    }
+    // if (!config.isSource) {
+    //   return false;
+    // }
+    //
+    // // Only run flow if `flow-bin` is listed as a dependency in the root package.json
+    // let pkg: ?PackageJSON = (
+    //   await config.getConfigFrom(options.projectRoot + '/index', [
+    //     'package.json',
+    //   ])
+    // )?.contents;
 
-    // Only run flow if `flow-bin` is listed as a dependency in the root package.json
-    let pkg: ?PackageJSON = (
-      await config.getConfigFrom(options.projectRoot + '/index', [
-        'package.json',
-      ])
-    )?.contents;
-
-    let shouldStripFlow =
-      pkg?.dependencies?.['flow-bin'] != null ||
-      pkg?.devDependencies?.['flow-bin'] != null;
+    let shouldStripFlow = true;
+    // pkg?.dependencies?.['flow-bin'] != null ||
+    // pkg?.devDependencies?.['flow-bin'] != null;
 
     if (shouldStripFlow) {
       config.addDevDependency({
