@@ -22,7 +22,7 @@ function* crossProduct(a, b) {
 }
 
 export default (new Resolver({
-  resolve({dependency, options, filePath}) {
+  resolve({dependency, options, specifier}) {
     const resolver = new NodeResolver({
       fs: options.inputFS,
       projectRoot: options.projectRoot,
@@ -31,8 +31,8 @@ export default (new Resolver({
     });
 
     return resolver.resolve({
-      filename: filePath,
-      isURL: dependency.specifierType === 'url',
+      filename: specifier,
+      specifierType: dependency.specifierType,
       parent: dependency.resolveFrom,
       env: dependency.env,
       sourcePath: dependency.sourcePath,

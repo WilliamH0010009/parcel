@@ -290,7 +290,7 @@ export default (new Transformer({
     ]);
 
     let targets;
-    if (asset.isSource) {
+    if (true || asset.isSource) {
       if (asset.env.isElectron() && asset.env.engines.electron) {
         targets = {
           electron: semver.minVersion(asset.env.engines.electron)?.toString(),

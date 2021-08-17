@@ -33,7 +33,8 @@
     "tag:prerelease": "lerna version --exact --force-publish=* --no-git-tag-version --no-push && node scripts/update-config-dependencies.js",
     "tag:release": "lerna version --force-publish=* --no-git-tag-version --no-push && node scripts/update-config-dependencies.js",
     "release": "lerna publish -y from-package --dist-tag=next --no-git-tag-version --no-push",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@babel/core": "^7.12.0",
@@ -68,5 +69,8 @@
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/parcel"
+  },
+  "dependencies": {
+    "patch-package": "^6.4.7"
   }
 }

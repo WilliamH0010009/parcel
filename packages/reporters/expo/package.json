@@ -20,6 +20,10 @@
     "parcel": "^2.0.0-beta.1"
   },
   "dependencies": {
-    "@parcel/plugin": "2.0.0-rc.0"
+    "@expo/dev-server": "^0.1.82",
+    "@parcel/plugin": "2.0.0-rc.0",
+    "@react-native-community/cli-server-api": "^5.0.1",
+    "connect": "^3.7.0",
+    "metro-inspector-proxy": "^0.66.2"
   }
 }
