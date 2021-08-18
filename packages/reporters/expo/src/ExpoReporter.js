@@ -66,12 +66,12 @@ function generateManifest(appJson: {[string]: mixed}) {
     },
     mainModuleName: 'entry.js',
     __flipperHack: 'React Native packager is running',
-    debuggerHost: '192.168.1.198:19000',
-    logUrl: 'http://192.168.1.198:19000/logs',
-    hostUri: '192.168.1.198:19000',
+    debuggerHost: '192.168.1.180:19000',
+    logUrl: 'http://192.168.1.180:19000/logs',
+    hostUri: '192.168.1.180:19000',
 
-    bundleUrl: 'http://192.168.1.198:19000/entry.js',
-    iconUrl: 'http://192.168.1.198:19000/./assets/icon.png',
+    bundleUrl: 'http://192.168.1.180:19000/entry.js',
+    iconUrl: 'http://192.168.1.180:19000/./assets/icon.png',
 
     id: '@anonymous/test-3c6237d9-8b66-4218-928d-09072aafe138',
   };
@@ -166,6 +166,7 @@ let server;
 function initialPageMiddleware(initialPageManifest) {
   return (req, res, next) => {
     if (req.url === '/') {
+      console.log(req.headers);
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(initialPageManifest));
       res.end(null);
@@ -183,7 +184,7 @@ const nativeMiddleware = (req, res, next) => {
   }
   if (url === '/') return next();
   const proxyReq = http.request(
-    `http://0.0.0.0:1234${url}`,
+    `http://localhost:1234${url}`,
     {method: req.method, headers: req.headers},
     proxyRes => {
       if (proxyRes.statusCode === 404) return next();
@@ -275,7 +276,7 @@ export default (new Reporter({
             getInitialPageManifest(
               'android',
               {port: 19000, minify: false},
-              '192.168.1.198',
+              '192.168.1.180',
               appJson,
               {main: 'entry.js'},
               options.projectRoot,

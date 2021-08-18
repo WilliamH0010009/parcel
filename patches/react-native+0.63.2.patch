@@ -1,3 +1,14 @@
+diff --git a/node_modules/react-native/Libraries/Core/setUpReactRefresh.js b/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
+index 4ee10ac..56fad9a 100644
+--- a/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
++++ b/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
+@@ -45,5 +45,5 @@ if (__DEV__) {
+     },
+   };
+ 
+-  (require: any).Refresh = Refresh;
++  // (require: any).Refresh = Refresh;
+ }
 diff --git a/node_modules/react-native/Libraries/Performance/Systrace.js b/node_modules/react-native/Libraries/Performance/Systrace.js
 index e1db39b..7e85aab 100644
 --- a/node_modules/react-native/Libraries/Performance/Systrace.js

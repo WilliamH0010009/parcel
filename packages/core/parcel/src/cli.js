@@ -233,7 +233,7 @@ async function run(
   let parcel = new Parcel({
     entries,
     // $FlowFixMe[extra-arg] - flow doesn't know about the `paths` option (added in Node v8.9.0)
-    defaultConfig: require.resolve('@parcel/config-default', {
+    defaultConfig: require.resolve('@parcel/config-expo', {
       paths: [fs.cwd(), __dirname],
     }),
     shouldPatchConsole: true,
