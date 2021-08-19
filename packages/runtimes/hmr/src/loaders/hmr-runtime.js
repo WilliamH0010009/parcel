@@ -89,7 +89,8 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
     protocol + '://' + hostname + (port ? ':' + port : '') + '/',
   );
   // $FlowFixMe
-  ws.onmessage = function(event /*: {data: string, ...} */) {
+  let ws_onmessage = function(event /*: {data: string, ...} */) {
+    console.log('onmessage', event.type);
     checkedAssets = ({} /*: {|[string]: boolean|} */);
     acceptedAssets = ({} /*: {|[string]: boolean|} */);
     assetsToAccept = [];
@@ -98,7 +99,7 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
 
     if (data.type === 'update') {
       // Remove error overlay if there is one
-      removeErrorOverlay();
+      // removeErrorOverlay();
 
       let assets = data.assets.filter(asset => asset.envHash === HMR_ENV_HASH);
 
@@ -146,21 +147,29 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
         );
       }
 
-      // Render the fancy html overlay
-      removeErrorOverlay();
-      var overlay = createErrorOverlay(data.diagnostics.html);
-      // $FlowFixMe
-      document.body.appendChild(overlay);
+      // // Render the fancy html overlay
+      // removeErrorOverlay();
+      // var overlay = createErrorOverlay(data.diagnostics.html);
+      // // $FlowFixMe
+      // document.body.appendChild(overlay);
     }
   };
-  ws.onerror = function(e) {
+  ws.addEventListener('message', ws_onmessage);
+  let ws_onerror = function(e) {
+    console.log('onerror', e);
     console.error(e.message);
   };
-  ws.onclose = function(e) {
+  ws.addEventListener('error', ws_onerror);
+  let ws_onclose = function(e) {
+    console.log('onclose', e);
     if (process.env.PARCEL_BUILD_ENV !== 'test') {
       console.warn('[parcel] 🚨 Connection to the HMR server was lost');
     }
   };
+  ws.addEventListener('close', ws_onclose);
+  // setInterval(function(){
+  //   console.log(ws.readyState, ws.url);
+  // }, 2000);
 }
 
 function removeErrorOverlay() {
