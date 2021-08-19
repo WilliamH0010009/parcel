@@ -2,7 +2,7 @@
   "name": "@parcel/example-expo",
   "version": "0.0.0",
   "scripts": {
-    "start": "parcel serve entry.js --target default"
+    "start": "parcel serve entry.js --target default --host 192.168.1.198 --hmr-port 4444"
   },
   "dependencies": {
     "expo": "~42.0.1",

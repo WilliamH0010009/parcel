@@ -1,14 +1,129 @@
 diff --git a/node_modules/react-native/Libraries/Core/setUpReactRefresh.js b/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
-index 4ee10ac..56fad9a 100644
+index 4ee10ac..d70394c 100644
 --- a/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
 +++ b/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
-@@ -45,5 +45,5 @@ if (__DEV__) {
-     },
-   };
+@@ -10,40 +10,40 @@
+ 
+ 'use strict';
+ 
+-if (__DEV__) {
+-  const DevSettings = require('../Utilities/DevSettings');
++// if (__DEV__) {
++//   const DevSettings = require('../Utilities/DevSettings');
+ 
+-  if (typeof DevSettings.reload !== 'function') {
+-    throw new Error('Could not find the reload() implementation.');
+-  }
++//   if (typeof DevSettings.reload !== 'function') {
++//     throw new Error('Could not find the reload() implementation.');
++//   }
+ 
+-  // This needs to run before the renderer initializes.
+-  const ReactRefreshRuntime = require('react-refresh/runtime');
+-  ReactRefreshRuntime.injectIntoGlobalHook(global);
++//   // This needs to run before the renderer initializes.
++//   const ReactRefreshRuntime = require('react-refresh/runtime');
++//   ReactRefreshRuntime.injectIntoGlobalHook(global);
+ 
+-  const Refresh = {
+-    performFullRefresh(reason: string) {
+-      DevSettings.reload(reason);
+-    },
++//   const Refresh = {
++//     performFullRefresh(reason: string) {
++//       DevSettings.reload(reason);
++//     },
+ 
+-    createSignatureFunctionForTransform:
+-      ReactRefreshRuntime.createSignatureFunctionForTransform,
++//     createSignatureFunctionForTransform:
++//       ReactRefreshRuntime.createSignatureFunctionForTransform,
+ 
+-    isLikelyComponentType: ReactRefreshRuntime.isLikelyComponentType,
++//     isLikelyComponentType: ReactRefreshRuntime.isLikelyComponentType,
+ 
+-    getFamilyByType: ReactRefreshRuntime.getFamilyByType,
++//     getFamilyByType: ReactRefreshRuntime.getFamilyByType,
+ 
+-    register: ReactRefreshRuntime.register,
++//     register: ReactRefreshRuntime.register,
+ 
+-    performReactRefresh() {
+-      if (ReactRefreshRuntime.hasUnrecoverableErrors()) {
+-        DevSettings.reload('Fast Refresh - Unrecoverable');
+-        return;
+-      }
+-      ReactRefreshRuntime.performReactRefresh();
+-      DevSettings.onFastRefresh();
+-    },
+-  };
++//     performReactRefresh() {
++//       if (ReactRefreshRuntime.hasUnrecoverableErrors()) {
++//         DevSettings.reload('Fast Refresh - Unrecoverable');
++//         return;
++//       }
++//       ReactRefreshRuntime.performReactRefresh();
++//       DevSettings.onFastRefresh();
++//     },
++//   };
  
 -  (require: any).Refresh = Refresh;
-+  // (require: any).Refresh = Refresh;
- }
+-}
++//   (require: any).Refresh = Refresh;
++// }
+diff --git a/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js b/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js
+index be3db86..51b1f15 100644
+--- a/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js
++++ b/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js
+@@ -53,7 +53,7 @@ function LogBoxInspectorHeader(props: Props): React.Node {
+         <LogBoxInspectorHeaderButton
+           disabled={props.total <= 1}
+           level={props.level}
+-          image={require('./LogBoxImages/chevron-left.png')}
++          // image={require('./LogBoxImages/chevron-left.png')}
+           onPress={() => props.onSelectIndex(prevIndex)}
+         />
+         <View style={styles.title}>
+@@ -62,7 +62,7 @@ function LogBoxInspectorHeader(props: Props): React.Node {
+         <LogBoxInspectorHeaderButton
+           disabled={props.total <= 1}
+           level={props.level}
+-          image={require('./LogBoxImages/chevron-right.png')}
++          // image={require('./LogBoxImages/chevron-right.png')}
+           onPress={() => props.onSelectIndex(nextIndex)}
+         />
+       </View>
+diff --git a/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.js b/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.js
+index 3ca8ebf..3ce2324 100644
+--- a/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.js
++++ b/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.js
+@@ -76,11 +76,11 @@ function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
+   let color;
+   switch (props.status) {
+     case 'FAILED':
+-      image = require('./LogBoxImages/alert-triangle.png');
++      // image = require('./LogBoxImages/alert-triangle.png');
+       color = LogBoxStyle.getErrorColor(1);
+       break;
+     case 'PENDING':
+-      image = require('./LogBoxImages/loader.png');
++      // image = require('./LogBoxImages/loader.png');
+       color = LogBoxStyle.getWarningColor(1);
+       break;
+   }
+diff --git a/node_modules/react-native/Libraries/LogBox/UI/LogBoxNotification.js b/node_modules/react-native/Libraries/LogBox/UI/LogBoxNotification.js
+index 26264ec..a543703 100644
+--- a/node_modules/react-native/Libraries/LogBox/UI/LogBoxNotification.js
++++ b/node_modules/react-native/Libraries/LogBox/UI/LogBoxNotification.js
+@@ -103,7 +103,7 @@ function DismissButton(props) {
+         onPress={props.onPress}
+         style={dismissStyles.press}>
+         <Image
+-          source={require('./LogBoxImages/close.png')}
++          // source={require('./LogBoxImages/close.png')}
+           style={dismissStyles.image}
+         />
+       </LogBoxButton>
 diff --git a/node_modules/react-native/Libraries/Performance/Systrace.js b/node_modules/react-native/Libraries/Performance/Systrace.js
 index e1db39b..7e85aab 100644
 --- a/node_modules/react-native/Libraries/Performance/Systrace.js

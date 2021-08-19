@@ -176,27 +176,6 @@ function initialPageMiddleware(initialPageManifest) {
   };
 }
 
-const nativeMiddleware = (req, res, next) => {
-  const url = req.url.split('?')[0];
-  if (url === '/logs') {
-    console.log(req.body);
-    return res.end();
-  }
-  if (url === '/') return next();
-  const proxyReq = http.request(
-    `http://localhost:1234${url}`,
-    {method: req.method, headers: req.headers},
-    proxyRes => {
-      if (proxyRes.statusCode === 404) return next();
-      if (url.endsWith('.js'))
-        proxyRes.headers['content-type'] = 'application/javascript';
-      res.writeHead(proxyRes.statusCode, proxyRes.headers);
-      proxyRes.pipe(res, {end: true});
-    },
-  );
-  req.pipe(proxyReq, {end: true});
-};
-
 function getInitialPageManifest(
   platform,
   {port, minify},
@@ -240,8 +219,10 @@ function getInitialPageManifest(
       projectRoot,
     },
     mainModuleName: pkg.main,
-    bundleUrl: `http://${host}/entry.js`,
+    bundleUrl: `http://${ip}:1234/entry.js`,
+    // bundleUrl: `http://${host}/entry.js`,
     // bundleUrl: `http://${host}/index.${platform}.js?platform=${platform}&dev=${!minify}&hot=false&minify=${minify}`,
+    logUrl: `http://${host}/logs`,
     debuggerHost: `${host}`,
     hostUri: `${host}`,
     iconUrl: `http://1${host}/assets/assets/images/icon.png`,
@@ -283,7 +264,23 @@ export default (new Reporter({
             ),
           ),
         );
-        middleware.use(nativeMiddleware);
+        middleware.use(
+          async (req: IncomingMessage, res: ServerResponse, next) => {
+            console.log(req.url);
+            if (req.url === '/logs') {
+              // const buffers = [];
+              // for await (const chunk of req) {
+              //   buffers.push(Buffer.from(chunk));
+              // }
+
+              // const data = Buffer.concat(buffers).toString();
+              // console.log(data); // 'Buy the milk'
+              res.statusCode = 200;
+              return res.end();
+            }
+            next();
+          },
+        );
         const server = http.createServer(middleware).listen(19000);
         const {messageSocket, eventsSocket} = attachToServer(server);
 
