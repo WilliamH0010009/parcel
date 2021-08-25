@@ -1,53 +1,29 @@
 diff --git a/node_modules/react-native/Libraries/Core/setUpReactRefresh.js b/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
-index 4ee10ac..d70394c 100644
+index 4ee10ac..065f6a7 100644
 --- a/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
 +++ b/node_modules/react-native/Libraries/Core/setUpReactRefresh.js
-@@ -10,40 +10,40 @@
- 
- 'use strict';
- 
--if (__DEV__) {
--  const DevSettings = require('../Utilities/DevSettings');
-+// if (__DEV__) {
-+//   const DevSettings = require('../Utilities/DevSettings');
- 
--  if (typeof DevSettings.reload !== 'function') {
--    throw new Error('Could not find the reload() implementation.');
--  }
-+//   if (typeof DevSettings.reload !== 'function') {
-+//     throw new Error('Could not find the reload() implementation.');
-+//   }
+@@ -17,33 +17,33 @@ if (__DEV__) {
+     throw new Error('Could not find the reload() implementation.');
+   }
  
 -  // This needs to run before the renderer initializes.
 -  const ReactRefreshRuntime = require('react-refresh/runtime');
 -  ReactRefreshRuntime.injectIntoGlobalHook(global);
-+//   // This needs to run before the renderer initializes.
-+//   const ReactRefreshRuntime = require('react-refresh/runtime');
-+//   ReactRefreshRuntime.injectIntoGlobalHook(global);
- 
+-
 -  const Refresh = {
 -    performFullRefresh(reason: string) {
 -      DevSettings.reload(reason);
 -    },
-+//   const Refresh = {
-+//     performFullRefresh(reason: string) {
-+//       DevSettings.reload(reason);
-+//     },
- 
+-
 -    createSignatureFunctionForTransform:
 -      ReactRefreshRuntime.createSignatureFunctionForTransform,
-+//     createSignatureFunctionForTransform:
-+//       ReactRefreshRuntime.createSignatureFunctionForTransform,
- 
+-
 -    isLikelyComponentType: ReactRefreshRuntime.isLikelyComponentType,
-+//     isLikelyComponentType: ReactRefreshRuntime.isLikelyComponentType,
- 
+-
 -    getFamilyByType: ReactRefreshRuntime.getFamilyByType,
-+//     getFamilyByType: ReactRefreshRuntime.getFamilyByType,
- 
+-
 -    register: ReactRefreshRuntime.register,
-+//     register: ReactRefreshRuntime.register,
- 
+-
 -    performReactRefresh() {
 -      if (ReactRefreshRuntime.hasUnrecoverableErrors()) {
 -        DevSettings.reload('Fast Refresh - Unrecoverable');
@@ -57,6 +33,26 @@ index 4ee10ac..d70394c 100644
 -      DevSettings.onFastRefresh();
 -    },
 -  };
+-
+-  (require: any).Refresh = Refresh;
++//   // This needs to run before the renderer initializes.
++//   const ReactRefreshRuntime = require('react-refresh/runtime');
++//   ReactRefreshRuntime.injectIntoGlobalHook(global);
++// 
++//   const Refresh = {
++//     performFullRefresh(reason: string) {
++//       DevSettings.reload(reason);
++//     },
++// 
++//     createSignatureFunctionForTransform:
++//       ReactRefreshRuntime.createSignatureFunctionForTransform,
++// 
++//     isLikelyComponentType: ReactRefreshRuntime.isLikelyComponentType,
++// 
++//     getFamilyByType: ReactRefreshRuntime.getFamilyByType,
++// 
++//     register: ReactRefreshRuntime.register,
++// 
 +//     performReactRefresh() {
 +//       if (ReactRefreshRuntime.hasUnrecoverableErrors()) {
 +//         DevSettings.reload('Fast Refresh - Unrecoverable');
@@ -66,11 +62,9 @@ index 4ee10ac..d70394c 100644
 +//       DevSettings.onFastRefresh();
 +//     },
 +//   };
- 
--  (require: any).Refresh = Refresh;
--}
++// 
 +//   (require: any).Refresh = Refresh;
-+// }
+ }
 diff --git a/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js b/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 index be3db86..51b1f15 100644
 --- a/node_modules/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js

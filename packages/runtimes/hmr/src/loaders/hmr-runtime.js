@@ -154,14 +154,7 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   };
   // $FlowFixMe
   ws.addEventListener('message', ws_onmessage);
-  let ws_onerror = function(e) {
-    console.log('onerror', e);
-    console.error(e.message);
-  };
-  // $FlowFixMe
-  ws.addEventListener('error', ws_onerror);
   let ws_onclose = function(e) {
-    console.log('onclose', e);
     if (process.env.PARCEL_BUILD_ENV !== 'test') {
       console.warn('[parcel] 🚨 Connection to the HMR server was lost');
     }
@@ -170,13 +163,13 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   ws.addEventListener('close', ws_onclose);
 }
 
-function removeErrorOverlay() {
-  var overlay = document.getElementById(OVERLAY_ID);
-  if (overlay) {
-    overlay.remove();
-    console.log('[parcel] ✨ Error resolved');
-  }
-}
+// function removeErrorOverlay() {
+//   var overlay = document.getElementById(OVERLAY_ID);
+//   if (overlay) {
+//     overlay.remove();
+//     console.log('[parcel] ✨ Error resolved');
+//   }
+// }
 
 function createErrorOverlay(diagnostics) {
   var overlay = document.createElement('div');
