@@ -25,57 +25,57 @@ const {
   // $FlowFixMe[untyped-import]
 } = require('@expo/dev-server/build/middleware/createJsInspectorMiddleware');
 
-function generateManifest(appJson: {[string]: mixed}) {
-  // $FlowFixMe
-  appJson.expo.splash.imageUrl =
-    // $FlowFixMe
-    'http://192.168.1.198:19000/' + appJson.expo.splash.image;
-  // $FlowFixMe
-  appJson.expo.android.adaptiveIcon.foregroundImageUrl =
-    'http://192.168.1.198:19000/' +
-    // $FlowFixMe
-    appJson.expo.android.adaptiveIcon.foregroundImage;
+// function generateManifest(host: string, appJson: {[string]: mixed}) {
+//   // $FlowFixMe
+//   appJson.expo.splash.imageUrl =
+//     // $FlowFixMe
+//     `http://${host}:19000/` + appJson.expo.splash.image;
+//   // $FlowFixMe
+//   appJson.expo.android.adaptiveIcon.foregroundImageUrl =
+//     `http://${host}:19000/` +
+//     // $FlowFixMe
+//     appJson.expo.android.adaptiveIcon.foregroundImage;
 
-  return {
-    ...appJson.expo,
+//   return {
+//     ...appJson.expo,
 
-    _internal: {
-      isDebug: false,
-      projectRoot: '/Users/niklas/Desktop/parcel/packages/examples/expo',
-      dynamicConfigPath: null,
-      staticConfigPath:
-        '/Users/niklas/Desktop/parcel/packages/examples/expo/app.json',
-      packageJsonPath:
-        '/Users/niklas/Desktop/parcel/packages/examples/expo/package.json',
-    },
-    sdkVersion: '42.0.0',
-    platforms: ['ios', 'android', 'web'],
-    developer: {
-      tool: 'expo-cli',
-      projectRoot: '/Users/niklas/Desktop/parcel/packages/examples/expo',
-    },
-    packagerOpts: {
-      scheme: null,
-      hostType: 'lan',
-      lanType: 'ip',
-      devClient: false,
-      dev: true,
-      minify: false,
-      urlRandomness: null,
-      https: false,
-    },
-    mainModuleName: 'entry.js',
-    __flipperHack: 'React Native packager is running',
-    debuggerHost: '192.168.1.180:19000',
-    logUrl: 'http://192.168.1.180:19000/logs',
-    hostUri: '192.168.1.180:19000',
+//     _internal: {
+//       isDebug: false,
+//       projectRoot: '/Users/niklas/Desktop/parcel/packages/examples/expo',
+//       dynamicConfigPath: null,
+//       staticConfigPath:
+//         '/Users/niklas/Desktop/parcel/packages/examples/expo/app.json',
+//       packageJsonPath:
+//         '/Users/niklas/Desktop/parcel/packages/examples/expo/package.json',
+//     },
+//     sdkVersion: '42.0.0',
+//     platforms: ['ios', 'android', 'web'],
+//     developer: {
+//       tool: 'expo-cli',
+//       projectRoot: '/Users/niklas/Desktop/parcel/packages/examples/expo',
+//     },
+//     packagerOpts: {
+//       scheme: null,
+//       hostType: 'lan',
+//       lanType: 'ip',
+//       devClient: false,
+//       dev: true,
+//       minify: false,
+//       urlRandomness: null,
+//       https: false,
+//     },
+//     mainModuleName: 'entry.js',
+//     __flipperHack: 'React Native packager is running',
+//     debuggerHost: `${host}:19000`,
+//     logUrl: `http://${host}:19000/logs`,
+//     hostUri: `${host}:19000`,
 
-    bundleUrl: 'http://192.168.1.180:19000/entry.js',
-    iconUrl: 'http://192.168.1.180:19000/./assets/icon.png',
+//     bundleUrl: `http://${host}:19000/entry.js`,
+//     iconUrl: `http://${host}:19000/./assets/icon.png`,
 
-    id: '@anonymous/test-3c6237d9-8b66-4218-928d-09072aafe138',
-  };
-}
+//     id: '@anonymous/test-3c6237d9-8b66-4218-928d-09072aafe138',
+//   };
+// }
 
 // async function handleRequest(
 //   req: IncomingMessage,
@@ -152,7 +152,7 @@ function generateManifest(appJson: {[string]: mixed}) {
 //   //     "count": 0,
 //   //     "level": "info",
 //   //     "body": [
-//   //       "Running \"main\" with {\"initialProps\":{\"exp\":{\"initialUri\":\"exp://192.168.1.198:19000\",\"shell\":false,\"manifestString\":\"{\\\"name\\\":\\\"test\\\",\\\"slug\\\":\\\"test\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"orientation\\\":\\\"portrait\\\",\\\"icon\\\":\\\".\\\\/assets\\\\/icon.png\\\",\\\"splash\\\":{\\\"image\\\":\\\".\\\\/assets\\\\/splash.png\\\",\\\"resizeMode\\\":\\\"contain\\\",\\\"backgroundColor\\\":\\\"#ffffff\\\",\\\"imageUrl\\\":\\\"http:\\\\/\\\\/192.168.1.198:19000\\\\/assets\\\\/.\\\\/assets\\\\/splash.png\\\"},\\\"updates\\\":{\\\"fallbackToCacheTimeout\\\":0},\\\"assetBundlePatterns\\\":[\\\"**\\\\/*\\\"],\\\"ios\\\":{\\\"supportsTablet\\\":true},\\\"android\\\":{\\\"adaptiveIcon\\\":{\\\"foregroundImage\\\":\\\".\\\\/assets\\\\/adaptive-icon.png\\\",\\\"backgroundColor\\\":\\\"#FFFFFF\\\",\\\"foregroundImageUrl\\\":\\\"http:\\\\/\\\\/192.168.1.198:19000\\\\/assets\\\\/.\\\\/assets\\\\/adaptive-icon.png\\\"}},\\\"web\\\":{\\\"favicon\\\":\\\".\\\\/assets\\\\/favicon.png\\\"},\\\"_internal\\\":{\\\"isDebug\\\":false,\\\"projectRoot\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\",\\\"dynamicConfigPath\\\":null,\\\"staticConfigPath\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\\/app.json\\\",\\\"packageJsonPath\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\\/package.json\\\"},\\\"sdkVersion\\\":\\\"42.0.0\\\",\\\"platforms\\\":[\\\"ios\\\",\\\"android\\\",\\\"web\\\"],\\\"developer\\\":{\\\"tool\\\":\\\"expo-cli\\\",\\\"projectRoot\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\"},\\\"packagerOpts\\\":{\\\"scheme\\\":null,\\\"hostType\\\":\\\"lan\\\",\\\"lanType\\\":\\\"ip\\\",\\\"devClient\\\":false,\\\"dev\\\":true,\\\"minify\\\":false,\\\"urlRandomness\\\":null,\\\"https\\\":false},\\\"mainModuleName\\\":\\\"node_modules\\\\/expo\\\\/AppEntry\\\",\\\"__flipperHack\\\":\\\"React Native packager is running\\\",\\\"debuggerHost\\\":\\\"192.168.1.198:19000\\\",\\\"logUrl\\\":\\\"http:\\\\/\\\\/192.168.1.198:19000\\\\/logs\\\",\\\"hostUri\\\":\\\"192.168.1.198:19000\\\",\\\"bundleUrl\\\":\\\"http:\\\\/\\\\/192.168.1.198:19000\\\\/node_modules\\\\/expo\\\\/AppEntry.bundle?platform=android&dev=true&hot=false&minify=false\\\",\\\"iconUrl\\\":\\\"http:\\\\/\\\\/192.168.1.198:19000\\\\/assets\\\\/.\\\\/assets\\\\/icon.png\\\",\\\"id\\\":\\\"@nmischkulnig\\\\/test\\\",\\\"isVerified\\\":true,\\\"primaryColor\\\":\\\"#023C69\\\"}\"}},\"rootTag\":1}"
+//   //       "Running \"main\" with {\"initialProps\":{\"exp\":{\"initialUri\":\"exp://192.168.1.180:19000\",\"shell\":false,\"manifestString\":\"{\\\"name\\\":\\\"test\\\",\\\"slug\\\":\\\"test\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"orientation\\\":\\\"portrait\\\",\\\"icon\\\":\\\".\\\\/assets\\\\/icon.png\\\",\\\"splash\\\":{\\\"image\\\":\\\".\\\\/assets\\\\/splash.png\\\",\\\"resizeMode\\\":\\\"contain\\\",\\\"backgroundColor\\\":\\\"#ffffff\\\",\\\"imageUrl\\\":\\\"http:\\\\/\\\\/192.168.1.180:19000\\\\/assets\\\\/.\\\\/assets\\\\/splash.png\\\"},\\\"updates\\\":{\\\"fallbackToCacheTimeout\\\":0},\\\"assetBundlePatterns\\\":[\\\"**\\\\/*\\\"],\\\"ios\\\":{\\\"supportsTablet\\\":true},\\\"android\\\":{\\\"adaptiveIcon\\\":{\\\"foregroundImage\\\":\\\".\\\\/assets\\\\/adaptive-icon.png\\\",\\\"backgroundColor\\\":\\\"#FFFFFF\\\",\\\"foregroundImageUrl\\\":\\\"http:\\\\/\\\\/192.168.1.180:19000\\\\/assets\\\\/.\\\\/assets\\\\/adaptive-icon.png\\\"}},\\\"web\\\":{\\\"favicon\\\":\\\".\\\\/assets\\\\/favicon.png\\\"},\\\"_internal\\\":{\\\"isDebug\\\":false,\\\"projectRoot\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\",\\\"dynamicConfigPath\\\":null,\\\"staticConfigPath\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\\/app.json\\\",\\\"packageJsonPath\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\\/package.json\\\"},\\\"sdkVersion\\\":\\\"42.0.0\\\",\\\"platforms\\\":[\\\"ios\\\",\\\"android\\\",\\\"web\\\"],\\\"developer\\\":{\\\"tool\\\":\\\"expo-cli\\\",\\\"projectRoot\\\":\\\"\\\\/Users\\\\/niklas\\\\/Desktop\\\\/test\\\"},\\\"packagerOpts\\\":{\\\"scheme\\\":null,\\\"hostType\\\":\\\"lan\\\",\\\"lanType\\\":\\\"ip\\\",\\\"devClient\\\":false,\\\"dev\\\":true,\\\"minify\\\":false,\\\"urlRandomness\\\":null,\\\"https\\\":false},\\\"mainModuleName\\\":\\\"node_modules\\\\/expo\\\\/AppEntry\\\",\\\"__flipperHack\\\":\\\"React Native packager is running\\\",\\\"debuggerHost\\\":\\\"192.168.1.180:19000\\\",\\\"logUrl\\\":\\\"http:\\\\/\\\\/192.168.1.180:19000\\\\/logs\\\",\\\"hostUri\\\":\\\"192.168.1.180:19000\\\",\\\"bundleUrl\\\":\\\"http:\\\\/\\\\/192.168.1.180:19000\\\\/node_modules\\\\/expo\\\\/AppEntry.bundle?platform=android&dev=true&hot=false&minify=false\\\",\\\"iconUrl\\\":\\\"http:\\\\/\\\\/192.168.1.180:19000\\\\/assets\\\\/.\\\\/assets\\\\/icon.png\\\",\\\"id\\\":\\\"@nmischkulnig\\\\/test\\\",\\\"isVerified\\\":true,\\\"primaryColor\\\":\\\"#023C69\\\"}\"}},\"rootTag\":1}"
 //   //     ],
 //   //     "includesStack": false,
 //   //     "groupDepth": 0
@@ -184,10 +184,7 @@ function getInitialPageManifest(
   pkg,
   projectRoot,
 ) {
-  //platformCustomConfig /* , app, pkg, ip, projectRoot */
   const host = `${ip}:${port}`;
-
-  //const {buildOptions} = getBuildOptions(platform, minify, pkg.main, platformCustomConfig, cleanCache)
 
   const initialPageManifest = {
     ...{
@@ -225,7 +222,7 @@ function getInitialPageManifest(
     logUrl: `http://${host}/logs`,
     debuggerHost: `${host}`,
     hostUri: `${host}`,
-    iconUrl: `http://1${host}/assets/assets/images/icon.png`,
+    iconUrl: `http://${host}/assets/icon.png`,
     isVerified: true,
   };
 
@@ -244,7 +241,7 @@ export default (new Reporter({
         const {middleware, attachToServer} = createDevServerMiddleware({
           host: '127.0.0.1',
           port: 19000,
-          watchFolders: [],
+          watchFolders: [options.projectRoot],
         });
         const appJson = JSON.parse(
           await options.inputFS.readFile(
