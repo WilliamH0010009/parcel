@@ -3,6 +3,7 @@ import type {FilePath} from '@parcel/types';
 import type {FileSystem} from '@parcel/fs';
 import type {IncomingMessage, ServerResponse} from 'http';
 
+import nullthrows from 'nullthrows';
 import path from 'path';
 import http from 'http';
 // import WebSocket from 'ws';
@@ -176,14 +177,15 @@ function initialPageMiddleware(initialPageManifest) {
   };
 }
 
-function getInitialPageManifest(
+function getInitialPageManifest({
   platform,
-  {port, minify},
   ip,
-  app,
+  port,
+  minify,
+  appJson,
   pkg,
   projectRoot,
-) {
+}) {
   const host = `${ip}:${port}`;
 
   const initialPageManifest = {
@@ -197,10 +199,10 @@ function getInitialPageManifest(
           packageJsonPath: projectRoot + '/package.json',
         },
         description: undefined,
-        sdkVersion: '41.0.0',
-        platforms: ['ios', 'android', 'web'],
+        sdkVersion: '42.0.0', // semver.major(semver.minVersion("^1.2.3"))
+        platforms: [platform],
       },
-      ...app.expo,
+      ...appJson.expo,
     },
     appOwnership: 'expo',
     packagerOpts: {
@@ -238,27 +240,31 @@ export default (new Reporter({
           return;
         }
 
+        const projectRoot = path.join(options.projectRoot, 'expo');
+        console.log(projectRoot);
+
         const {middleware, attachToServer} = createDevServerMiddleware({
           host: '127.0.0.1',
           port: 19000,
-          watchFolders: [options.projectRoot],
+          watchFolders: [projectRoot],
         });
         const appJson = JSON.parse(
           await options.inputFS.readFile(
-            path.join(options.projectRoot, 'app.json'),
+            path.join(projectRoot, 'app.json'),
             'utf8',
           ),
         );
         middleware.use(
           initialPageMiddleware(
-            getInitialPageManifest(
-              'android',
-              {port: 19000, minify: false},
-              '192.168.1.180',
+            getInitialPageManifest({
+              platform: 'android',
+              ip: nullthrows(serveOptions.host),
+              port: 19000,
+              minify: false,
               appJson,
-              {main: 'entry.js'},
-              options.projectRoot,
-            ),
+              pkg: {main: 'entry.js'},
+              projectRoot,
+            }),
           ),
         );
         middleware.use(
