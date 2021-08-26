@@ -11,7 +11,11 @@ import 'react-native/Libraries/Core/InitializeCore.js';
 `;
 
 export default (new Runtime({
-  apply({options}) {
+  apply({bundle, options}) {
+    if (bundle.type !== 'js') {
+      return;
+    }
+
     // TODO not in every bundle
     return {
       filePath: path.join(options.projectRoot, 'index'),

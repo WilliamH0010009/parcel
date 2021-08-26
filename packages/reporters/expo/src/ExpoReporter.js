@@ -167,7 +167,7 @@ let server;
 function initialPageMiddleware(initialPageManifest) {
   return (req, res, next) => {
     if (req.url === '/') {
-      console.log(req.headers);
+      // console.log(req.headers);
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(initialPageManifest));
       res.end(null);

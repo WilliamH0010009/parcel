@@ -2,5 +2,9 @@
   "extends": "@parcel/config-default",
   "resolvers": ["@parcel/resolver-react-native"],
   "reporters": ["@parcel/reporter-expo", "..."],
-  "runtimes": ["...", "@parcel/runtime-react-native"]
+  "runtimes": [
+    "@parcel/runtime-react-native-assets",
+    "...",
+    "@parcel/runtime-react-native"
+  ]
 }
