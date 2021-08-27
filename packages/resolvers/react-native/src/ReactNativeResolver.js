@@ -1,7 +1,13 @@
 // @flow
 
+// import type {FilePath} from '@parcel/types';
+
+// import path from 'path';
+// import nullthrows from 'nullthrows';
+
 import {Resolver} from '@parcel/plugin';
 import NodeResolver from '@parcel/node-resolver-core';
+// import {glob} from '@parcel/utils';
 
 const NODE_EXTENSIONS = ['ts', 'tsx', 'js', 'jsx', 'json'];
 function getReactNativeInfixes() {
@@ -21,8 +27,10 @@ function* crossProduct(a, b) {
   }
 }
 
+// const SCALE_REGEX = /^(.+?)(@([\d.]+)x)?\.\w+*$/;
+
 export default (new Resolver({
-  resolve({dependency, options, specifier}) {
+  async resolve({dependency, options, specifier}) {
     const resolver = new NodeResolver({
       fs: options.inputFS,
       projectRoot: options.projectRoot,
@@ -30,12 +38,56 @@ export default (new Resolver({
       mainFields: ['source', 'browser', 'module', 'main'],
     });
 
-    return resolver.resolve({
+    let result = await resolver.resolve({
       filename: specifier,
       specifierType: dependency.specifierType,
       parent: dependency.resolveFrom,
       env: dependency.env,
       sourcePath: dependency.sourcePath,
     });
+
+    //     if (
+    //       result != null &&
+    //       result.filePath &&
+    //       result.filePath?.endsWith('.png')
+    //     ) {
+    //       const basename = removeExtension(result.filePath);
+    //       const g = basename + '@*x.png';
+    //       result.invalidateOnFileCreate?.push({
+    //         glob: g,
+    //       });
+    //       let otherFiles = (
+    //         await glob(g, options.inputFS, {
+    //           deep: false,
+    //           onlyFiles: true,
+    //         })
+    //       ).map(f => {
+    //         let [, , scale] = nullthrows(path.basename(f).match(SCALE_REGEX));
+    //         return scale;
+    //       });
+
+    //       return {
+    //         filePath: basename + '.js',
+    //         code: `
+
+    // module.exports = require("react-native/Libraries/Image/AssetRegistry").registerAsset({
+    //   __packager_asset: true,
+    //   httpServerLocation: ${JSON.stringify('/')},
+    //   width: ${630},
+    //   height: ${258},
+    //   scales: ${JSON.stringify([1, ...otherFiles])}
+    //   hash: "abc",
+    //   name: ${JSON.stringify(basename)},
+    //   type: "png",
+    //   fileHashes: ["abc"],
+    // });`,
+    //       };
+    //     }
+
+    return result;
   },
 }): Resolver);
+
+// function removeExtension(v: FilePath) {
+//   return v.substring(0, v.lastIndexOf('.'));
+// }

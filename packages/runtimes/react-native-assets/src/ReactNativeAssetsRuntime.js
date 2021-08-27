@@ -3,7 +3,7 @@
 import {Runtime} from '@parcel/plugin';
 
 // https://github.com/facebook/metro/blob/af23a1b27bcaaff2e43cb795744b003e145e78dd/packages/metro/src/Assets.js#L187-L228
-
+// https://github.com/facebook/metro/blob/af23a1b27bcaaff2e43cb795744b003e145e78dd/packages/metro/src/__tests__/Assets-test.js#L202
 export default (new Runtime({
   apply({bundle, bundleGraph}) {
     if (bundle.type !== 'js') {
