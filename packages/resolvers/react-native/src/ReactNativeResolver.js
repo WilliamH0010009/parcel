@@ -1,13 +1,14 @@
 // @flow
 
-// import type {FilePath} from '@parcel/types';
+import type {FilePath} from '@parcel/types';
 
-// import path from 'path';
-// import nullthrows from 'nullthrows';
+import path from 'path';
+import nullthrows from 'nullthrows';
 
 import {Resolver} from '@parcel/plugin';
 import NodeResolver from '@parcel/node-resolver-core';
-// import {glob} from '@parcel/utils';
+import {glob} from '@parcel/utils';
+import {Hash} from '@parcel/hash';
 
 const NODE_EXTENSIONS = ['ts', 'tsx', 'js', 'jsx', 'json'];
 function getReactNativeInfixes() {
@@ -27,10 +28,13 @@ function* crossProduct(a, b) {
   }
 }
 
-// const SCALE_REGEX = /^(.+?)(@([\d.]+)x)?\.\w+*$/;
+const SCALE_REGEX = /^(?:.+?)(?:@([\d.]+)x)?\.\w+$/;
+
+// https://github.com/facebook/metro/blob/af23a1b27bcaaff2e43cb795744b003e145e78dd/packages/metro/src/Assets.js#L187-L228
+// https://github.com/facebook/metro/blob/af23a1b27bcaaff2e43cb795744b003e145e78dd/packages/metro/src/__tests__/Assets-test.js#L202
 
 export default (new Resolver({
-  async resolve({dependency, options, specifier}) {
+  async resolve({dependency, options, specifier, pipeline}) {
     const resolver = new NodeResolver({
       fs: options.inputFS,
       projectRoot: options.projectRoot,
@@ -46,48 +50,70 @@ export default (new Resolver({
       sourcePath: dependency.sourcePath,
     });
 
-    //     if (
-    //       result != null &&
-    //       result.filePath &&
-    //       result.filePath?.endsWith('.png')
-    //     ) {
-    //       const basename = removeExtension(result.filePath);
-    //       const g = basename + '@*x.png';
-    //       result.invalidateOnFileCreate?.push({
-    //         glob: g,
-    //       });
-    //       let otherFiles = (
-    //         await glob(g, options.inputFS, {
-    //           deep: false,
-    //           onlyFiles: true,
-    //         })
-    //       ).map(f => {
-    //         let [, , scale] = nullthrows(path.basename(f).match(SCALE_REGEX));
-    //         return scale;
-    //       });
+    const filePath = result?.filePath;
+    if (
+      pipeline !== 'rn-asset' &&
+      result != null &&
+      filePath != null &&
+      filePath?.endsWith('.png')
+    ) {
+      const basename = removeExtension(filePath);
+      const g = basename + '@*x.png';
+      let invalidateOnFileCreate = result.invalidateOnFileCreate ?? [];
+      invalidateOnFileCreate.push({
+        glob: g,
+      });
+      let hash = new Hash();
+      let files = [{file: path.basename(filePath), scale: 1}].concat(
+        (
+          await glob(g, options.inputFS, {
+            deep: false,
+            onlyFiles: true,
+          })
+        ).map(file => {
+          let [, scale] = nullthrows(path.basename(file).match(SCALE_REGEX));
+          return {file: path.basename(file), scale: Number(scale)};
+        }),
+      );
 
-    //       return {
-    //         filePath: basename + '.js',
-    //         code: `
+      for (let {file} of files) {
+        hash.writeBuffer(
+          await options.inputFS.readFile(
+            path.join(path.dirname(filePath), file),
+          ),
+        );
+      }
 
-    // module.exports = require("react-native/Libraries/Image/AssetRegistry").registerAsset({
-    //   __packager_asset: true,
-    //   httpServerLocation: ${JSON.stringify('/')},
-    //   width: ${630},
-    //   height: ${258},
-    //   scales: ${JSON.stringify([1, ...otherFiles])}
-    //   hash: "abc",
-    //   name: ${JSON.stringify(basename)},
-    //   type: "png",
-    //   fileHashes: ["abc"],
-    // });`,
-    //       };
-    //     }
+      // TODO proper hash
+
+      return {
+        filePath: basename + '.js',
+        code: `
+${files
+  .map(({file}) => `require(${JSON.stringify('rn-asset:./' + file)});`)
+  .join('\n')}
+
+module.exports = require("react-native/Libraries/Image/AssetRegistry").registerAsset({
+  __packager_asset: true,
+  httpServerLocation: ${JSON.stringify('/')},
+  width: ${630},
+  height: ${258},
+  scales: ${JSON.stringify(files.map(({scale}) => scale))},
+  hash: ${JSON.stringify(hash.finish())},
+  name: ${JSON.stringify(path.basename(basename))},
+  type: "png",
+});
+`,
+        pipeline: 'rn-asset',
+        invalidateOnFileCreate,
+        invalidateOnFileChange: result.invalidateOnFileChange,
+      };
+    }
 
     return result;
   },
 }): Resolver);
 
-// function removeExtension(v: FilePath) {
-//   return v.substring(0, v.lastIndexOf('.'));
-// }
+function removeExtension(v: FilePath) {
+  return v.substring(0, v.lastIndexOf('.'));
+}

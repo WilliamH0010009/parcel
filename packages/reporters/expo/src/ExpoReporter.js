@@ -267,24 +267,31 @@ export default (new Reporter({
             }),
           ),
         );
-        middleware.use(
-          async (req: IncomingMessage, res: ServerResponse, next) => {
-            console.log(req.url);
-            if (req.url === '/logs') {
-              // const buffers = [];
-              // for await (const chunk of req) {
-              //   buffers.push(Buffer.from(chunk));
-              // }
+        middleware.use((req: IncomingMessage, res: ServerResponse, next) => {
+          if (req.url === '/logs') {
+            // const buffers = [];
+            // for await (const chunk of req) {
+            //   buffers.push(Buffer.from(chunk));
+            // }
 
-              // const data = Buffer.concat(buffers).toString();
-              // console.log(data); // 'Buy the milk'
-              res.statusCode = 200;
-              return res.end();
-            }
-            next();
-          },
-        );
-        const server = http.createServer(middleware).listen(19000);
+            // const data = Buffer.concat(buffers).toString();
+            // console.log(data); // 'Buy the milk'
+            res.statusCode = 200;
+            return res.end();
+          }
+          logger.verbose({
+            message: `Request unhandled: ${req.headers.host}${req.url}`,
+          });
+          next();
+        });
+        const server = http
+          .createServer((req: IncomingMessage, res: ServerResponse, next) => {
+            logger.verbose({
+              message: `Request: ${req.headers.host}${req.url}`,
+            });
+            middleware(req, res, next);
+          })
+          .listen(19000);
         const {messageSocket, eventsSocket} = attachToServer(server);
 
         // var app = connect();
