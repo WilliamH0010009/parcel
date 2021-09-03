@@ -7317,6 +7317,11 @@ flow-parser@^0.158.0:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.158.0.tgz#d845f167c722babe880110fc3681c44f21823399"
   integrity sha512-0hMsPkBTRrkII/0YiG9ehOxFXy4gOWdk8RSRze5WbfeKAQpL5kC2K4BmumyTfU9o5gr7/llgElF3UpSSrjzQAA==
 
+flow-parser@^0.159.0:
+  version "0.159.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.159.0.tgz#478cb540be9f4ae2214c4f3c22430f3365b5da21"
+  integrity sha512-/AFSLMSbqictmgPm+vrXBD0rLTsVRrlKfiGRoDjt/WhhUxqy5ZMuLVHbRD/g3C3JRnJgDrKSb3+piQoM1dzVGw==
+
 flow-remove-types@^2.158.0:
   version "2.158.0"
   resolved "https://registry.yarnpkg.com/flow-remove-types/-/flow-remove-types-2.158.0.tgz#22be85994305866e7d0304d5af96d4c3d6e4b27f"
@@ -8249,6 +8254,11 @@ hermes-engine@~0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.5.1.tgz#601115e4b1e0a17d9aa91243b96277de4e926e09"
   integrity sha512-hLwqh8dejHayjlpvZY40e1aDCDvyP98cWx/L5DhAjSJLH8g4z9Tp08D7y4+3vErDsncPOdf1bxm+zUWpx0/Fxg==
+
+hermes-parser@^0.4.8:
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/hermes-parser/-/hermes-parser-0.4.8.tgz#f0896361cf577021524511d24c70f07391ee5ecb"
+  integrity sha512-JSew2q2DSFKjcLGxEeO7Mjc/Gfw4yV2MZvUWAJPrI8rstBL9ZWNckE/sI+5ixzp8g7s9CAs4vez1+6I/EHX/Xg==
 
 hermes-profile-transformer@^0.0.6:
   version "0.0.6"
@@ -16347,7 +16357,7 @@ vlq@^0.2.1:
   resolved "https://registry.yarnpkg.com/vlq/-/vlq-0.2.3.tgz#8f3e4328cf63b1540c0d67e1b2778386f8975b26"
   integrity sha512-DRibZL6DsNhIgYQ+wNdWDL2SL3bKPlVrRiBqV5yuMm++op8W4kGFtaQfCs4KEJn0wBZcHVHJ3eoywX8983k1ow==
 
-vlq@^1.0.0:
+vlq@^1.0.0, vlq@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/vlq/-/vlq-1.0.1.tgz#c003f6e7c0b4c1edd623fd6ee50bbc0d6a1de468"
   integrity sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==

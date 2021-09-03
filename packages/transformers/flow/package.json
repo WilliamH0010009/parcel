@@ -20,7 +20,10 @@
     "parcel": "^2.0.0-beta.1"
   },
   "dependencies": {
-    "@parcel/plugin": "2.0.0-rc.0"
+    "@parcel/plugin": "2.0.0-rc.0",
+    "hermes-parser": "^0.4.8",
+    "flow-parser": "^0.159.0",
+    "vlq": "^1.0.1"
   },
   "devDependencies": {
     "flow-remove-types": "^2.158.0"

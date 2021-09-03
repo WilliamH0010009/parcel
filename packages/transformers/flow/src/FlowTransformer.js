@@ -21,9 +21,13 @@ export default (new Transformer({
 
     if (shouldStripFlow) {
       config.addDevDependency({
-        specifier: 'flow-remove-types',
-        resolveFrom: options.projectRoot + '/index',
+        specifier: './flow-remove-types.js',
+        resolveFrom: __filename,
       });
+      // config.addDevDependency({
+      //   specifier: 'flow-remove-types',
+      //   resolveFrom: options.projectRoot + '/index',
+      // });
     }
     return shouldStripFlow;
   },
@@ -33,17 +37,20 @@ export default (new Transformer({
       return [asset];
     }
 
-    let [code, flowRemoveTypes] = await Promise.all([
-      asset.getCode(),
-      options.packageManager.require(
-        'flow-remove-types',
-        options.projectRoot + '/index',
-        {
-          shouldAutoInstall: options.shouldAutoInstall,
-          saveDev: true,
-        },
-      ),
-    ]);
+    const flowRemoveTypes = require('./flow-remove-types.js');
+    let code = await asset.getCode();
+
+    // let [code, flowRemoveTypes] = await Promise.all([
+    //   asset.getCode(),
+    //   options.packageManager.require(
+    //     'flow-remove-types',
+    //     options.projectRoot + '/index',
+    //     {
+    //       shouldAutoInstall: options.shouldAutoInstall,
+    //       saveDev: true,
+    //     },
+    //   ),
+    // ]);
 
     // This replaces removed code sections with spaces, so all source positions
     // remain valid and no sourcemap is needed.
