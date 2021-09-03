@@ -52,9 +52,9 @@ export default async function prettyDiagnostic(
 
       let highlights = codeFrame.codeHighlights;
       let code =
-        codeFrame.code ??
+        codeFrame.code; /* ??
         (options &&
-          (await options.inputFS.readFile(nullthrows(filePath), 'utf8')));
+          (await options.inputFS.readFile(nullthrows(filePath), 'utf8')))*/
 
       let formattedCodeFrame = '';
       if (code != null) {
